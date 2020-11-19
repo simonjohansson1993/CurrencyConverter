@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+
+    <ImageView
+        android:id="@+id/flag_image_eu"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:src="@drawable/eur"/>
+
+    <TextView
+        android:id="@+id/currencyRate_number"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/flag_image_eu"
+        style ="@style/TextAppearance.AppCompat.Title"
+        android:maxLength="50"
+        android:singleLine="true"
+        android:text="1.1052" />
+
+    <TextView
+        android:id="@+id/countryName_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/currencyRate_number"
+        android:layout_toEndOf="@+id/flag_image_eu"
+        style ="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+        android:text="European Union" />
+
+
+
+
+</RelativeLayout>

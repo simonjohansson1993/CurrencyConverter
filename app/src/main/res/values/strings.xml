@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Currency Converter</string>
+    <string name="sweden">SEK</string>
+    <string name="choose_currency">Choose Currency</string>
+    <string name="enteramount">EnterAmount</string>
+    <string name="hello_world">Hello world</string>
+    <string name="rates">Rates</string>
+    <string-array name="currencies">
+        <item>EUR</item>
+        <item>SEK</item>
+        <item>USD</item>
+        <item>GBP</item>
+        <item>CNY</item>
+        <item>JPY</item>
+        <item>KRW</item>
+    </string-array>
+</resources>
+
