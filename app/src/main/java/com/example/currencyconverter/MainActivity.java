@@ -3,6 +3,7 @@ package com.example.currencyconverter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,8 +18,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import java.util.ArrayList;
  //implements AdapterView.OnItemSelectedListener
 public class MainActivity extends AppCompatActivity  {
@@ -33,8 +32,6 @@ public class MainActivity extends AppCompatActivity  {
     public double userAmount;
     public double finalResult;
 
-
-
      TextView result_textView;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +39,8 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         initList();
 
-
         Spinner mySpinner1 = (Spinner) findViewById(R.id.spinner1);
         Spinner mySpinner2 = (Spinner) findViewById(R.id.spinner2);
-
 
         _adapter = new CountryAdapter(this,R.layout.country_spinner_row,_countryList);
         mySpinner1.setAdapter(_adapter);
@@ -69,7 +64,6 @@ public class MainActivity extends AppCompatActivity  {
                      String selectCountryText = "select a country to see currency rates";
                      Toast.makeText(MainActivity.this, selectCountryText, Toast.LENGTH_SHORT).show();
                  }
-
              }
          });
 
@@ -143,11 +137,8 @@ public class MainActivity extends AppCompatActivity  {
                         finalResult = (userAmount*clickedCountry.getCurrencyRate());
                         result_textView.setText((int) finalResult + " " + clickedCountryCurrency);
                     }
-
                 }
-
             }
-
             //Auto generated method
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -155,7 +146,6 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
      }
-
     private void initList(){
         _countryList = new ArrayList<>();
         _countryList.add(0,new Country("","choose country",0));
@@ -190,15 +180,13 @@ public class MainActivity extends AppCompatActivity  {
             //case "KRW": intent.putExtra("Title", l5); break;
             //case "USD": intent.putExtra("Title", l6); break;
             //case "CNY": intent.putExtra("Title", l7); break;
-
-
         }
-
     }
      @Override
      protected void onPause() {
-
+        String TAG = "Hello";
          super.onPause();
+         Log.d( TAG, " OnPause");
          active = false;
      }
      @Override
@@ -208,11 +196,13 @@ public class MainActivity extends AppCompatActivity  {
          active = false;
      }
 
-     @Override
+
      protected void onResume() {
+         String TAG = "Hello";
          super.onResume();
-         initList();
+         Log.d( TAG, " OnResume");
          active = true;
+
      }
 
      @Override
@@ -226,6 +216,4 @@ public class MainActivity extends AppCompatActivity  {
          super.onStart();
          active = true;
      }
-
-
  }

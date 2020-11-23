@@ -42,7 +42,7 @@ public class CountryAdapter extends ArrayAdapter<Country> {
 
             if (currentCountry!= null ){
                 imageViewFlag.setImageResource(currentCountry.get_flagImage());
-                textViewCurrency.setText(currentCountry.get_currencyName() + " " + currentCountry.getCurrencyRate());
+                textViewCurrency.setText( currentCountry.getCurrencyRate()+ " " + currentCountry.get_currencyName());
                 //textViewCurrency.setText(currentCountry.get_currencyName() + " " +CurrencyRate.EUR_to_SEK);
                 textViewCountryName.setText(currentCountry.getCountryName());
             }

@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class SecondActivity extends AppCompatActivity {
+    private static final String SELECTED_COUNTRY = "com.example.currencyconverter.SELECTED_COUNTRY" ;
     ListView listView;
     private CountryAdapter _adapter;
     public static boolean active = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +39,28 @@ public class SecondActivity extends AppCompatActivity {
         countryList.add(new Country("USA","USD", R.drawable.usd));
         countryList.add(new Country("China","CNY", R.drawable.cny));
 
+        setCurrencyRates(countryCurrency,countryList);
         _adapter = new CountryAdapter(this,R.layout.list_row,countryList);
         listView.setAdapter(_adapter);
 
     }
 
-    private void SetCurrencyRates(String countryCurr, ArrayList<Country> countries){
+    private void setCurrencyRates(String countryCurr, ArrayList<Country> countries){
+        if(countryCurr.equals("SEK")){
+          browseAndSetList(countries.get(0),CurrencyRate.SEK_to_SEK);
+            browseAndSetList(countries.get(1),CurrencyRate.SEK_to_EUR);
+            browseAndSetList(countries.get(2),CurrencyRate.SEK_to_JPY);
+            browseAndSetList(countries.get(3),CurrencyRate.SEK_to_GBP);
+            browseAndSetList(countries.get(4),CurrencyRate.SEK_to_KRW);
+            browseAndSetList(countries.get(5),CurrencyRate.SEK_to_USA);
+            browseAndSetList(countries.get(6),CurrencyRate.SEK_to_CNY);
+           //Country country = countries.get(0);
+           //country.setCurrencyRate(CurrencyRate.SEK_to_SEK);
+        }
+    }
+    private void browseAndSetList(Country country,double RATE){
 
+        country.setCurrencyRate(RATE);
     }
 
     @Override
