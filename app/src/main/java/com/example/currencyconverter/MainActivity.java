@@ -3,6 +3,7 @@ package com.example.currencyconverter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,6 +32,15 @@ public class MainActivity extends AppCompatActivity  {
     public Country countryToCalc= null;
     public double userAmount;
     public double finalResult;
+    Spinner mySpinner1;
+    Spinner mySpinner2;
+    EditText userInput;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String TEXT = "text";
+    public static final String SECOND_COUNTRY = "secondCountry";
+
+    private String text;
 
      TextView result_textView;
      @Override
@@ -39,8 +49,8 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         initList();
 
-        Spinner mySpinner1 = (Spinner) findViewById(R.id.spinner1);
-        Spinner mySpinner2 = (Spinner) findViewById(R.id.spinner2);
+        mySpinner1 = (Spinner) findViewById(R.id.spinner1);
+        mySpinner2 = (Spinner) findViewById(R.id.spinner2);
 
         _adapter = new CountryAdapter(this,R.layout.country_spinner_row,_countryList);
         mySpinner1.setAdapter(_adapter);
@@ -67,7 +77,7 @@ public class MainActivity extends AppCompatActivity  {
              }
          });
 
-         final EditText userInput = (EditText) findViewById(R.id.editTextNumber);
+         userInput = (EditText) findViewById(R.id.editTextNumber);
          userInput.setOnKeyListener(new View.OnKeyListener() {
              public boolean onKey(View v, int keyCode, KeyEvent event) {
                  // If the event is a key-down event on the "enter" button
@@ -75,7 +85,7 @@ public class MainActivity extends AppCompatActivity  {
                          (keyCode == KeyEvent.KEYCODE_ENTER)) {
                      // Perform action on key press
                      //String test = "test";
-                     if (userInput.getText().toString().matches("")) {
+                     if (userInput.getText().toString().matches("") || countryToCalc==null) {
                          String hint = "NaN";
                          result_textView.setText(hint);
                      }
@@ -145,6 +155,8 @@ public class MainActivity extends AppCompatActivity  {
 
             }
         });
+
+
      }
     private void initList(){
         _countryList = new ArrayList<>();
@@ -159,41 +171,90 @@ public class MainActivity extends AppCompatActivity  {
     }
     public void setCurrencyConstants(String countryCurrency,String countryToConvert,Country country){
 
-         if (countryCurrency.equals("SEK")){
-           if (countryToConvert.equals("EUR")){
-                country.setCurrencyRate(CurrencyRate.SEK_to_EUR); }
-           else if (countryToConvert.equals("USD")){
-               country.setCurrencyRate(CurrencyRate.SEK_to_USA);
-           }else if (countryToConvert.equals("JPY")){
-               country.setCurrencyRate(CurrencyRate.SEK_to_JPY);
-           }else if (countryToConvert.equals("GBP")){
-               country.setCurrencyRate(CurrencyRate.SEK_to_GBP);
-           }else if (countryToConvert.equals("KRW")){
-               country.setCurrencyRate(CurrencyRate.SEK_to_KRW);
-           }else if (countryToConvert.equals("CNY")){
-               country.setCurrencyRate(CurrencyRate.SEK_to_CNY);
-           }
+         if (countryCurrency.equals("SEK")) {
+             switch (countryToConvert) {
+                 case "EUR":
+                     country.setCurrencyRate(CurrencyRate.SEK_to_EUR);
+                     break;
+                 case "USD":
+                     country.setCurrencyRate(CurrencyRate.SEK_to_USA);
+                     break;
+                 case "JPY":
+                     country.setCurrencyRate(CurrencyRate.SEK_to_JPY);
+                     break;
+                 case "KRW":
+                     country.setCurrencyRate(CurrencyRate.SEK_to_KRW);
+                     break;
+                 case "CNY":
+                     country.setCurrencyRate(CurrencyRate.SEK_to_CNY);
+                     break;
+                 case "GBP":
+                     country.setCurrencyRate(CurrencyRate.SEK_to_GBP);
+                     break;
+             }
+         }
+         else if (countryCurrency.equals("EUR")){
+             switch (countryToConvert) {
+                 case "SEK":
+                     country.setCurrencyRate(CurrencyRate.EUR_to_SEK);
+                     break;
+                 case "USD":
+                     country.setCurrencyRate(CurrencyRate.EUR_to_USA);
+                     break;
+                 case "JPY":
+                     country.setCurrencyRate(CurrencyRate.EUR_to_JPY);
+                     break;
+                 case "KRW":
+                     country.setCurrencyRate(CurrencyRate.EUR_to_KRW);
+                     break;
+                 case "CNY":
+                     country.setCurrencyRate(CurrencyRate.EUR_to_CNY);
+                     break;
+                 case "GBP":
+                     country.setCurrencyRate(CurrencyRate.EUR_to_GBP);
+                     break;
+             }
+         }
+    }
+    public void saveData(){
+         //private for no other apps usage
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TEXT, String.valueOf(userInput.getText()));
+        int selectedPosition = mySpinner1.getSelectedItemPosition();
+        int selectedPosition2 = mySpinner2.getSelectedItemPosition();
+        editor.putInt("spinnerSelection", selectedPosition);
+        editor.putInt("spinnerSelection2", selectedPosition2);
+        editor.apply();
 
-           // case "EUR": intent.putExtra("Title", l2); break;
-            //case "JPY": intent.putExtra("Title", l3); break;
-            //case "GBP": intent.putExtra("Title", l4); break;
-            //case "KRW": intent.putExtra("Title", l5); break;
-            //case "USD": intent.putExtra("Title", l6); break;
-            //case "CNY": intent.putExtra("Title", l7); break;
-        }
+        Toast.makeText(this,"data saved",Toast.LENGTH_SHORT).show();
+    }
+    public void loadData(){
+         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+         text = sharedPreferences.getString(TEXT,"");
+         mySpinner1.setSelection(sharedPreferences.getInt("spinnerSelection",0));
+         mySpinner2.setSelection(sharedPreferences.getInt("spinnerSelection2",0));
+    }
+    public void updateView(){
+         userInput.setText(text);
     }
      @Override
      protected void onPause() {
-        String TAG = "Hello";
+        saveData();
+         String TAG = "Hello";
          super.onPause();
          Log.d( TAG, " OnPause");
          active = false;
+
      }
      @Override
      protected void onStop() {
-
+         String TAG = "Hello";
+         Log.d( TAG, " OnStop");
          super.onStop();
          active = false;
+        // saveData();
+
      }
 
 
@@ -202,13 +263,15 @@ public class MainActivity extends AppCompatActivity  {
          super.onResume();
          Log.d( TAG, " OnResume");
          active = true;
+         loadData();
+         //updateView();
+
 
      }
 
      @Override
      protected void onDestroy() {
          super.onDestroy();
-
 
      }
      @Override

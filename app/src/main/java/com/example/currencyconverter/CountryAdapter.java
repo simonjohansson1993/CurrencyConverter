@@ -37,7 +37,8 @@ public class CountryAdapter extends ArrayAdapter<Country> {
             Country currentCountry = getItem(position);
 
             if (MainActivity.active){
-                currentCountry = null;
+                //currentCountry = null;
+                return initView(position,convertView,parent);
             }
 
             if (currentCountry!= null ){

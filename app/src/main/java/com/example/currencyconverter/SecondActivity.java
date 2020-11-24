@@ -24,7 +24,7 @@ public class SecondActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String countryCurrency = intent.getStringExtra(MainActivity.SELECTED_COUNTRY);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Currency Rates");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Currency Rates 1 " + countryCurrency);
 
         listView = findViewById(R.id.myListView);
 
@@ -39,10 +39,12 @@ public class SecondActivity extends AppCompatActivity {
         countryList.add(new Country("USA","USD", R.drawable.usd));
         countryList.add(new Country("China","CNY", R.drawable.cny));
 
-        setCurrencyRates(countryCurrency,countryList);
         _adapter = new CountryAdapter(this,R.layout.list_row,countryList);
         listView.setAdapter(_adapter);
 
+        if (countryCurrency!=null){
+            setCurrencyRates(countryCurrency,countryList);
+        }
     }
 
     private void setCurrencyRates(String countryCurr, ArrayList<Country> countries){
@@ -57,11 +59,25 @@ public class SecondActivity extends AppCompatActivity {
            //Country country = countries.get(0);
            //country.setCurrencyRate(CurrencyRate.SEK_to_SEK);
         }
-    }
+        else if(countryCurr.equals("EUR")){
+
+            browseAndSetList(countries.get(0),CurrencyRate.EUR_to_SEK);
+            browseAndSetList(countries.get(1),CurrencyRate.EUR_to_EUR);
+            browseAndSetList(countries.get(2),CurrencyRate.EUR_to_JPY);
+            browseAndSetList(countries.get(3),CurrencyRate.EUR_to_GBP);
+            browseAndSetList(countries.get(4),CurrencyRate.EUR_to_KRW);
+            browseAndSetList(countries.get(5),CurrencyRate.EUR_to_USA);
+            browseAndSetList(countries.get(6),CurrencyRate.EUR_to_CNY);
+                //Country country = countries.get(0);
+                //country.setCurrencyRate(CurrencyRate.SEK_to_SEK);
+            }
+        }
+
     private void browseAndSetList(Country country,double RATE){
 
         country.setCurrencyRate(RATE);
     }
+
 
     @Override
     public void onStart() {

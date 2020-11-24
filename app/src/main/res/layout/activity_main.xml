@@ -104,4 +104,30 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/spinner1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="78dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="-7dp"
+        android:text="From"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="30dp"
+        android:layout_height="23dp"
+        android:layout_alignBottom="@+id/spinner2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="171dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="-37dp"
+        android:text="To"
+        android:textColor="#ffffff" />
+
 </RelativeLayout>
