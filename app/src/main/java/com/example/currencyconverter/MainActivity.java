@@ -7,12 +7,14 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
@@ -70,11 +72,12 @@ public class MainActivity extends AppCompatActivity {
     Spinner mySpinner1;
     Spinner mySpinner2;
     EditText userInput;
-    TextView api_result;
     Button parse_btn;
+    public static String Test = "";
+
+    LocationManager _locationManager;
 
     public float conversionRate = 0f;
-    public float base = 0f;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT = "text";
     public static final String SECOND_COUNTRY = "secondCountry";
@@ -93,6 +96,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initList();
+        _locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
 
         mySpinner1 = (Spinner) findViewById(R.id.spinner1);
         mySpinner2 = (Spinner) findViewById(R.id.spinner2);
@@ -103,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         _adapter = new CountryAdapter(this, R.layout.country_spinner_row, _countryList);
         mySpinner1.setAdapter(_adapter);
         mySpinner2.setAdapter(_adapter);
+
 
 
         result_textView = (TextView) findViewById(R.id.result_text);
@@ -243,7 +259,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private void initList(){
         _countryList = new ArrayList<>();
         _countryList.add(0,new Country("","choose country",0));
@@ -324,6 +339,30 @@ public class MainActivity extends AppCompatActivity {
     public void updateView(){
          userInput.setText(text);
     }
+    /*
+    public void onLocationChanged(Location location){
+        if (location.getLongitude()!=0 && location.getLatitude()!=0){
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        }
+
+        textView.setText("longitude: " + longitude + "\n" + " latitude " + latitude );
+    }
+
+    private void location_finder(Location location)  {
+        try {
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> addresses = null;
+            addresses = geocoder.getFromLocation(latitude,longitude,1);
+            String country = addresses.get(0).getCountryName();
+            textView.setText("Country: " + country);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Error" + e, Toast.LENGTH_SHORT).show();
+        }
+    }*/
+
      @Override
      protected void onPause() {
         saveData();
