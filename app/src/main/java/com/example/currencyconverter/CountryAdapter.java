@@ -7,12 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Text;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CountryAdapter extends ArrayAdapter<Country> {
@@ -36,18 +34,19 @@ public class CountryAdapter extends ArrayAdapter<Country> {
             TextView textViewCountryName = convertView.findViewById(R.id.countryName_text);
             Country currentCountry = getItem(position);
 
+
             if (MainActivity.active){
                 //currentCountry = null;
                 return initView(position,convertView,parent);
             }
 
             if (currentCountry!= null ){
+                DecimalFormat numberFormat = new DecimalFormat("#0.0000");
                 imageViewFlag.setImageResource(currentCountry.get_flagImage());
-                textViewCurrency.setText( currentCountry.getCurrencyRate()+ " " + currentCountry.get_currencyName());
+                textViewCurrency.setText(numberFormat.format(currentCountry.getCurrencyRate()) + " " + currentCountry.get_currencyName());
                 //textViewCurrency.setText(currentCountry.get_currencyName() + " " +CurrencyRate.EUR_to_SEK);
                 textViewCountryName.setText(currentCountry.getCountryName());
             }
-
 
             return convertView;
         }
@@ -76,8 +75,6 @@ public class CountryAdapter extends ArrayAdapter<Country> {
             imageViewFlag.setImageResource(currentCountry.get_flagImage());
             textViewName.setText(currentCountry.get_currencyName());
         }
-
-
         return convertView;
     }
 
