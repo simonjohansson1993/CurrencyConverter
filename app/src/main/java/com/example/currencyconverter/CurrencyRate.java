@@ -1,5 +1,5 @@
 package com.example.currencyconverter;
-
+/*
 public class CurrencyRate {
     //Swedish Rates
     public static final double SEK_to_SEK = 1.0;
@@ -64,3 +64,4 @@ public class CurrencyRate {
     public static final double KRW_to_JPY = 0.0940952;
     public static final double KRW_to_KRW = 1.0;
 }
+*/

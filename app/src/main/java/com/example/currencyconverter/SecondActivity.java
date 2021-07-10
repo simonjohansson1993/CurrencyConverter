@@ -3,6 +3,7 @@ package com.example.currencyconverter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -23,6 +24,8 @@ import java.util.Objects;
 
 public class SecondActivity extends AppCompatActivity {
     private static final String SELECTED_COUNTRY = "com.example.currencyconverter.SELECTED_COUNTRY" ;
+
+
     ListView listView;
     public CountryAdapter _adapter;
     public static boolean active = false;
@@ -43,7 +46,7 @@ public class SecondActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         countryToConvertFrom = intent.getStringExtra(MainActivity.SELECTED_COUNTRY);
-
+        Log.d("second activity: ",countryToConvertFrom+" hey");
 
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Currency Rates 1 " + countryToConvertFrom);
@@ -89,7 +92,7 @@ public class SecondActivity extends AppCompatActivity {
 
     private void parseApi(final ArrayList<Country> countries){
         RequestQueue queue = Volley.newRequestQueue(SecondActivity.this);
-        String serverUrl = "http://data.fixer.io/api/latest?access_key=86bf2e99489d9b269f83fbff6a98db46";
+        String serverUrl = "http://data.fixer.io/api/latest?access_key=86a1652a0960b0a2d628c70d394f6834";
         JsonObjectRequest jsonObjectRequest = new
                 JsonObjectRequest(Request.Method.GET,serverUrl,
                 new JSONObject(),
@@ -111,7 +114,7 @@ public class SecondActivity extends AppCompatActivity {
                             while(i<7){
                                 String countryToConvertTo = countries.get(i).get_currencyName();
                                 conversionRate2 = Float.parseFloat(object.getJSONObject("rates").getString(countryToConvertTo));
-                                //final result
+                                //final result after conversions
                                 finalResult = conversionRate2 * reverseConvertion;
 
                                 browseAndSetList(countries.get(i),finalResult);
@@ -120,7 +123,7 @@ public class SecondActivity extends AppCompatActivity {
 
 
 
-                          /*  conversionRate = Float.parseFloat(object.getJSONObject("rates").getString(countries.get(1).get_currencyName()));
+                          /* conversionRate = Float.parseFloat(object.getJSONObject("rates").getString(countries.get(1).get_currencyName()));
                             browseAndSetList(countries.get(1),conversionRate);
 
                             conversionRate = Float.parseFloat(object.getJSONObject("rates").getString(countries.get(2).get_currencyName()));
