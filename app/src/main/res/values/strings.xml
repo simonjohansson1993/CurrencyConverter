@@ -5,6 +5,7 @@
     <string name="enteramount">EnterAmount</string>
     <string name="hello_world">Hello world</string>
     <string name="rates">Rates</string>
+    <string name="history">Chart</string>
     <string-array name="currencies">
         <item>EUR</item>
         <item>SEK</item>

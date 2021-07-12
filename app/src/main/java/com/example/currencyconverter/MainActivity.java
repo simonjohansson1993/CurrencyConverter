@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         final TextView currencyTextView = (TextView) findViewById(R.id.textView_currency_small);
 
         Button rate_btn = (Button) findViewById(R.id.more_info_btn);
+        Button history_btn = (Button) findViewById(R.id.history_btn);
+
 
         rate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,15 @@ public class MainActivity extends AppCompatActivity {
                     String selectCountryText = "select a country to see currency rates";
                     Toast.makeText(MainActivity.this, selectCountryText, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        history_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, ThirdActivity.class);
+                myIntent.putExtra("key", "ChosenCountry"); //Optional parameters
+                MainActivity.this.startActivity(myIntent);
             }
         });
 
